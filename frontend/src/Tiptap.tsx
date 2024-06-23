@@ -8,6 +8,8 @@ import Placeholder from '@tiptap/extension-placeholder';
 import Blockquote from '@tiptap/extension-blockquote';
 import CodeBlock from '@tiptap/extension-code-block';
 import './style.scss'; // Ensure SCSS loader is configured in your project
+import { ItalicIcon, BoldIcon } from './Icon';
+import TextStyle from '@tiptap/extension-text-style'
 
 interface TiptapProps {
   description: string;
@@ -20,7 +22,8 @@ const Tiptap: React.FC<TiptapProps> = ({ description, onChange }) => {
       Blockquote,
       StarterKit,
       CodeBlock,
-      Highlight.configure({ multicolor: true }),
+      TextStyle, 
+      Highlight.configure(),
       Emoji.configure({
         emojis: gitHubEmojis,
         enableEmoticons: true,
@@ -30,6 +33,10 @@ const Tiptap: React.FC<TiptapProps> = ({ description, onChange }) => {
       Placeholder.configure({
         placeholder: 'Tell your Story …',
       }),
+      CodeBlock.configure({
+        HTMLAttributes: {
+          class: 'code-block',
+        }}),
     ],
     content: description,
     editorProps: {
@@ -98,30 +105,36 @@ const Tiptap: React.FC<TiptapProps> = ({ description, onChange }) => {
           </button>
       </div>
       {editor && <BubbleMenu editor={editor} tippyOptions={{ duration: 100 }}>
-        <div className="bubble-menu">
-          <button
-            onClick={() => editor.chain().focus().toggleBold().run()}
-            className={editor.isActive('bold') ? 'is-active' : ''}
-          >
-            Bold
-            {/* <svg width="15px" height="15px" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg" fill="none">
-            <path fill="#000000" fillRule="evenodd" d="M4 1a1 1 0 00-1 1v16a1 1 0 001 1v-1 1h8a5 5 0 001.745-9.687A5 5 0 0010 1H4zm6 8a3 3 0 100-6H5v6h5zm-5 2v6h7a3 3 0 100-6H5z"></path>
-          </svg> */}
-          </button>
-          <button
-            onClick={() => editor.chain().focus().toggleItalic().run()}
-            className={editor.isActive('italic') ? 'is-active' : ''}
-          >
-            Italic
-            {/* <svg width="16px" height="16px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path d="M13.25 4L7.25 20M16.75 4L10.75 20M19.5 4L9.5 4M14.5 20H4.5" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path> </g></svg> */}
-          </button>
-          <button
-            onClick={() => editor.chain().focus().toggleStrike().run()}
-            className={` ${editor.isActive('strike') ? 'is-active' : ''}`}
-          >
-            Strike 
-            {/* <svg width="20px" height="20px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"><path d="M17 5H10C8.34315 5 7 6.34315 7 8V9C7 10.6569 8.34315 12 10 12H17M7 19H14C15.6569 19 17 17.6569 17 16V15" stroke="#000000" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path><path d="M5 12H19" stroke="#000000" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></g></svg> */}
-          </button>
+        <div className="bubble-menu bg-zinc-800 text-gray-100 rounded">
+          <div className='px-2 py-1'>
+              <button
+                onClick={() => editor.chain().focus().toggleBold().run()}
+                className={editor.isActive('bold') ? 'is-active' : ''}
+              >
+                {/* Bold */}
+                <BoldIcon /> 
+              </button>
+          </div>
+          
+          <div className='px-2 py-1'>
+              <button
+                onClick={() => editor.chain().focus().toggleItalic().run()}
+                className={editor.isActive('italic') ? 'is-active' : ''}
+              >
+                {/* Italic */}
+                <ItalicIcon /> 
+              </button>
+          </div>
+          {/* <div>
+              <button
+                onClick={() => editor.chain().focus().toggleStrike().run()}
+                className={` ${editor.isActive('strike') ? 'is-active' : ''} `}
+              > */}
+                {/* Strike  */}
+                {/* <svg width="15px" height="15px" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg" fill="	#FFFFFF" stroke="	#FFFFFF" stroke-width="0.00016"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"><path d="M4.513 5.257c0 .266.026.514.077.743h2.36a1.835 1.835 0 01-.224-.265 1.157 1.157 0 01-.142-.585c0-.424.165-.755.496-.99.33-.248.773-.372 1.327-.372.496 0 .944.088 1.345.265.401.177.79.419 1.168.726l1.045-1.31a4.91 4.91 0 00-1.611-1.062A4.842 4.842 0 008.407 2c-.566 0-1.091.083-1.575.248a3.74 3.74 0 00-1.221.69 3.336 3.336 0 00-.815 1.044c-.188.39-.283.814-.283 1.275zM8.177 14a6.004 6.004 0 01-2.265-.443A5.913 5.913 0 014 12.301l1.204-1.398c.413.389.885.708 1.415.955a3.894 3.894 0 001.593.354c.661 0 1.163-.135 1.505-.407a1.31 1.31 0 00.513-1.08c0-.235-.047-.436-.142-.601a1.156 1.156 0 00-.371-.425 2.588 2.588 0 00-.567-.354 10.36 10.36 0 00-.708-.318L8.382 9H2V7h12v2h-2.046c.08.14.148.291.205.451.118.319.177.69.177 1.115 0 .472-.094.915-.283 1.328a3.227 3.227 0 01-.832 1.097c-.354.307-.79.555-1.31.744-.507.177-1.085.265-1.734.265z" fill="	#FFFFFF"></path></g></svg>
+              </button>
+          </div> */}
+          
         </div>
       </BubbleMenu>}
 
@@ -138,3 +151,4 @@ const Tiptap: React.FC<TiptapProps> = ({ description, onChange }) => {
 };
 
 export default Tiptap;
+

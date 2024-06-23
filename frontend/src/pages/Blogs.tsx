@@ -33,7 +33,7 @@ export function Blogs() {
               <div className="w-3/4 h-4 bg-gray-300 rounded"></div>
             </div>
             {/* Repeat the skeleton loader as many times as needed */}
-            {/* <div className="border-b-2 border-gray-300 pb-6 mb-6">
+            <div className="border-b-2 border-gray-300 pb-6 mb-6">
               <div className="flex items-center mb-3">
                 <div className="w-8 h-8 bg-gray-300 rounded-full mr-3"></div>
                 <div className="w-24 h-4 bg-gray-300 rounded mr-2"></div>
@@ -43,8 +43,8 @@ export function Blogs() {
               <div className="w-full h-24 bg-gray-300 rounded mb-4"></div>
               <div className="w-3/4 h-4 bg-gray-300 rounded"></div>
             </div>
-            {/* repeat */}
-            {/* <div className="border-b-2 border-gray-300 pb-6 mb-6">
+          
+            <div className="border-b-2 border-gray-300 pb-6 mb-6">
               <div className="flex items-center mb-3">
                 <div className="w-8 h-8 bg-gray-300 rounded-full mr-3"></div>
                 <div className="w-24 h-4 bg-gray-300 rounded mr-2"></div>
@@ -53,7 +53,7 @@ export function Blogs() {
               <div className="w-full h-8 bg-gray-300 rounded mb-4"></div>
               <div className="w-full h-24 bg-gray-300 rounded mb-4"></div>
               <div className="w-3/4 h-4 bg-gray-300 rounded"></div>
-            </div> */}
+            </div>
             <span className="sr-only">Loading...</span>
           </div>
         </div>
