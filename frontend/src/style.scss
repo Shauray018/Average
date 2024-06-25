@@ -1,117 +1,122 @@
 /* Basic editor styles */
 .tiptap {
-    :first-child {
-      margin-top: 0;
+  &:first-child {
+    margin-top: 0;
+  }
+
+  h1:first-child {
+    transition: all 0.2s ease-in-out;
+    padding-left: 10px;
+    margin-left: 10px;
+    border-left: 4px solid transparent;
+
+    &.is-active-title {
+      border-left: 4px solid #808080;
     }
-  
-    /* List styles */
-    ul, 
-    ol {
-      padding: 0 1rem;
-      margin: 1.25rem 1rem 1.25rem 0.4rem;
-  
-      li p {
-        margin-top: 0.25em;
-        margin-bottom: 0.25em;
-      }
+  }
+
+  /* List styles */
+  ul,
+  ol {
+    padding: 0 1rem;
+    margin: 1.25rem 1rem 1.25rem 0.4rem;
+
+    li p {
+      margin-top: 0.25em;
+      margin-bottom: 0.25em;
     }
-  
-    /* Heading styles */
-    h1, 
-    h2, 
-    h3, 
-    h4, 
-    h5, 
-    h6 {
-      line-height: 1.1;
-      margin-top: 2.5rem;
-      text-wrap: pretty;
-    }
-  
-    h1, 
-    h2 {
-      margin-top: 3.5rem;
-      margin-bottom: 1.5rem;
-    }
-  
-    h1 { 
-      font-size: 1.4rem; 
-    }
-  
-    h2 { 
-      font-size: 1.2rem; 
-    }
-  
-    h3 { 
-      font-size: 1.1rem; 
-    }
-  
-    h4, 
-    h5, 
-    h6 { 
-      font-size: 1rem; 
-    }
-  
-    /* Code and preformatted text styles */
+  }
+
+  /* Heading styles */
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    line-height: 1.1;
+    margin-top: 2.5rem;
+    text-wrap: pretty;
+  }
+
+  h1,
+  h2 {
+    margin-top: 0rem;
+    margin-bottom: 1.5rem;
+  }
+
+  h1 {
+    font-size: 3rem;
+  }
+
+  h2 {
+    font-size: 1.2rem;
+  }
+
+  h3 {
+    font-size: 1.1rem;
+  }
+
+  h4,
+  h5,
+  h6 {
+    font-size: 1rem;
+  }
+
+  /* Code and preformatted text styles */
+  code {
+    background-color: var(--purple-light);
+    border-radius: 0.4rem;
+    color: var(--black);
+    font-size: 0.85rem;
+    padding: 0.25em 0.3em;
+  }
+
+  pre {
+    background: #302f2f;
+    border-radius: 0.5rem;
+    color: #FFFFFF;
+    font-family: 'JetBrainsMono', monospace;
+    margin: 1.5rem 0;
+    padding: 0.75rem 1rem;
+
     code {
-      background-color: var(--purple-light);
-      border-radius: 0.4rem;
-      color: var(--black);
-      font-size: 0.85rem;
-      padding: 0.25em 0.3em;
+      background: none;
+      color: inherit;
+      font-size: 0.8rem;
+      padding: 0;
     }
-  
-    pre {
-      background:  #302f2f;
-      border-radius: 0.5rem;
-      color: #FFFFFF;
-      font-family: 'JetBrainsMono', monospace;
-      margin: 1.5rem 0;
-      padding: 0.75rem 1rem;
-  
-      code {
-        background: none;
-        color: inherit;
-        font-size: 0.8rem;
-        padding: 0;
-      }
-    }
-  
-    /* Blockquote styles */
-    blockquote {
-      border-left: 3px solid #808080;
-      margin: 1.5rem 0;
-      padding-left: 1rem;
-      font-family: 'Times New Roman', Times, serif;
-    }
-  
-    /* Horizontal rule styles */
-    hr {
-      border: none;
-      border-top: 1px solid var(--gray-2);
-      margin: 2rem 0;
-    }
-    
-    /* Placeholder (at the top) */
-    p.is-editor-empty:first-child::before {
-      color: #adb5bd;
-      content: attr(data-placeholder);
-      float: left;
-      height: 0;
-      pointer-events: none;
-      font-family: Georgia, 'Times New Roman', Times, serif;
-    }
-  
-    /* Placeholder (on every new line) */
-    /* .is-empty::before {
-      color: var(--gray-4);
-      content: attr(data-placeholder);
-      float: left;
-      height: 0;
-      pointer-events: none;
-    } */
-    
+  }
+
+  /* Blockquote styles */
+  blockquote {
+    border-left: 3px solid #808080;
+    margin: 1.5rem 0;
+    padding-left: 1rem;
+    font-family: 'Times New Roman', Times, serif;
+  }
+
+  /* Horizontal rule styles */
+  hr {
+    border: none;
+    border-top: 1px solid var(--gray-2);
+    margin: 2rem 0;
+  }
+
+  /* Placeholder (at the top) */
+  .is-empty::before {
+    color: #808080;
+    content: attr(data-placeholder);
+    float: left;
+    height: 0;
+    pointer-events: none;
+  }
+
+  .ProseMirror p.is-editor-empty:first-child::before {
+    content: attr(data-placeholder);
+  }
 }
+
 /* Bubble menu */
 .bubble-menu {
   background-color: #FFFFFF;
@@ -127,6 +132,5 @@
     &:hover {
       background-color: #808080;
     }
-    }
-  
+  }
 }
