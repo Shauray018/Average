@@ -39,7 +39,7 @@ I conceptualized and developed a comprehensive blogging platform inspired by Med
 - Addressed the stateless nature of serverless functions by implementing efficient caching strategies and optimizing database queries.
 
 ### Rich Text Persistence
-- Developed a custom solution to store and retrieve formatted text content, ensuring that article formatting is preserved across sessions and devices.
+- Developed a custom solution to store and retrieve formatted text content, ensuring that article formatting is preserved across sessions and devices. (under construction)
 
 ### Performance Optimization
 - Implemented lazy loading and code splitting in React to improve initial load times and overall application performance.
