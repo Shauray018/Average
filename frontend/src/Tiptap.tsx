@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { useEditor, EditorContent, BubbleMenu } from '@tiptap/react';
+import { useEditor, EditorContent, FloatingMenu, BubbleMenu } from '@tiptap/react';
 import StarterKit from '@tiptap/starter-kit';
 import Highlight from '@tiptap/extension-highlight';
 import Emoji, { gitHubEmojis } from '@tiptap-pro/extension-emoji';
@@ -8,10 +8,11 @@ import Placeholder from '@tiptap/extension-placeholder';
 import Blockquote from '@tiptap/extension-blockquote';
 import CodeBlock from '@tiptap/extension-code-block';
 import './style.scss';
-import { ItalicIcon, BoldIcon, HeadIcon } from './Icon';
+import { ItalicIcon, BoldIcon, HeadIcon, CodeIcon, HrIcon } from './Icon';
 import TextStyle from '@tiptap/extension-text-style';
 import Heading from '@tiptap/extension-heading';
 import Document from '@tiptap/extension-document';
+import HorizontalRule from '@tiptap/extension-horizontal-rule'
 
 interface TiptapProps {
   initialTitle: string;
@@ -25,10 +26,12 @@ const CustomDocument = Document.extend({
 });
 
 const Tiptap: React.FC<TiptapProps> = ({ initialTitle, initialContent, onTitleChange, onContentChange }) => {
+  
   const editor = useEditor({
     extensions: [
       Blockquote,
-      CustomDocument,
+      CustomDocument
+      , HorizontalRule,
       StarterKit.configure({
         document: false,
       }),
@@ -42,11 +45,14 @@ const Tiptap: React.FC<TiptapProps> = ({ initialTitle, initialContent, onTitleCh
         suggestion: emojiSuggestion,
       }),
       Placeholder.configure({
+        includeChildren: false,
+        
         placeholder: ({ node }) => {
           if (node.type.name === 'heading') {
-            return 'Title';
+            return 'What’s the title?'
+          } else { 
+            return "|"
           }
-          return 'Tell your story...';
         },
       }),
       CodeBlock.configure({
@@ -74,6 +80,7 @@ const Tiptap: React.FC<TiptapProps> = ({ initialTitle, initialContent, onTitleCh
       onContentChange(restContent);
     },
   });
+  
 
   useEffect(() => {
     if (editor) {
@@ -100,42 +107,70 @@ const Tiptap: React.FC<TiptapProps> = ({ initialTitle, initialContent, onTitleCh
     }
   }, [editor]);
 
-  return (
+   return (
     <div className="flex justify-normal">
       {editor && (
-        <BubbleMenu editor={editor} tippyOptions={{ duration: 100 }}>
-          <div className="bubble-menu bg-zinc-800 text-gray-100 rounded">
-            <div className="px-2 py-1">
-              <button
-                onClick={() => editor.chain().focus().toggleBold().run()}
-                className={editor.isActive('bold') ? 'is-active' : ''}
-              >
-                <BoldIcon />
-              </button>
+        <>
+          <BubbleMenu editor={editor} tippyOptions={{ duration: 100 }}>
+            <div className="bubble-menu bg-zinc-800 text-gray-100 rounded">
+              <div className="px-2 py-1">
+                <button
+                  onClick={() => editor.chain().focus().toggleBold().run()}
+                  className={editor.isActive('bold') ? 'is-active' : ''}
+                >
+                  <BoldIcon />
+                </button>
+              </div>
+              <div className="px-2 py-1">
+                <button
+                  onClick={() => editor.chain().focus().toggleItalic().run()}
+                  className={editor.isActive('italic') ? 'is-active' : ''}
+                >
+                  <ItalicIcon />
+                </button>
+              </div>
+              <div className="px-2 py-1">
+                <button
+                  onClick={() => editor.chain().focus().toggleHeading({ level: 1 }).run()}
+                  className={editor.isActive('heading', { level: 1 }) ? 'is-active' : ''}
+                >
+                  <HeadIcon />
+                </button>
+              </div>
             </div>
+            
+          </BubbleMenu>
 
-            <div className="px-2 py-1">
-              <button
-                onClick={() => editor.chain().focus().toggleItalic().run()}
-                className={editor.isActive('italic') ? 'is-active' : ''}
-              >
-                <ItalicIcon />
+          <FloatingMenu editor={editor} tippyOptions={{ duration: 100 }}>
+            <div className="floating-menu bg-inherit  text-gray-100 flex gap-3">
+              <div className="px-2 py-1 border-2 rounded-full border-[#5F8575]">
+                <button
+                  onClick={() => editor.chain().focus().toggleHeading({ level: 1 }).run()}
+                  className={editor.isActive('heading', { level: 1 }) ? 'is-active' : ''}
+                >
+                  <HeadIcon />
+                </button>
+              </div>
+              <div className="px-2 py-1 border-2 rounded-full border-[#5F8575]">
+              <button onClick={() => editor.chain().focus().setHorizontalRule().run()}>
+                  <HrIcon />
               </button>
-            </div>
-
-            <div className="px-2 py-1">
-              <button
-                onClick={() => editor.chain().focus().toggleHeading({ level: 1 }).run()}
-                className={editor.isActive('heading', { level: 1 }) ? 'is-active' : ''}
-              >
-                <HeadIcon />
+              </div>
+              <div className=" px-1 border-2 rounded-full border-[#5F8575]">
+                <button
+                  onClick={() => editor.chain().focus().toggleCodeBlock().run()}
+                  className={editor.isActive('codeBlock') ? 'is-active' : ''}
+                >
+                  <CodeIcon />
               </button>
+              </div>
             </div>
-          </div>
-        </BubbleMenu>
+          </FloatingMenu>
+        </>
       )}
       <EditorContent editor={editor} />
     </div>
+    
   );
 };
 
