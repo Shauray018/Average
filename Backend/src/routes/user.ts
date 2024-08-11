@@ -3,6 +3,7 @@ import { withAccelerate } from '@prisma/extension-accelerate'
 import { Hono } from 'hono';
 import { sign, verify} from 'hono/jwt'
 import { signinInput, signupInput} from '@shauray03/common';
+import { use } from 'hono/jsx';
 // Create the main Hono app
 export const userRouter = new Hono<{
 	Bindings: {
@@ -79,6 +80,18 @@ userRouter.post("/", async (c) => {
         user
     });
 });
+
+userRouter.get("/bulk", async (c) => {
+	const prisma = new PrismaClient({
+        datasourceUrl: c.env?.DATABASE_URL,
+    }).$extends(withAccelerate());
+	const users = await prisma.user.findMany() 
+
+	return c.json({ 
+		users
+	})
+	
+})
 
 
 // const posts = await prisma.post.findMany({
