@@ -4,7 +4,9 @@ import { Hono } from 'hono';
 import { sign, verify} from 'hono/jwt'
 import { signinInput, signupInput} from '@shauray03/common';
 import { use } from 'hono/jsx';
-// Create the main Hono app
+import bcrypt, { hash } from 'bcrypt';
+
+
 export const userRouter = new Hono<{
 	Bindings: {
 		DATABASE_URL: string,
@@ -24,10 +26,12 @@ userRouter.post('/signup', async (c) => {
 			c.status(400);
 			return c.json({ error: "invalid input" });
 		}
+
+		const hashedPassword =await bcrypt.hash(body.password,10); 
 		const user = await prisma.user.create({
 			data: {
 				email: body.email,
-				password: body.password,
+				password: hashedPassword,
 				name: body.name
 			}
 		});
