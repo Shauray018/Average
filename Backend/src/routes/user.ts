@@ -64,6 +64,12 @@ userRouter.post('/signin', async (c) => {
 		c.status(403);
 		return c.json({ error: "user not found" });
 	}
+	const isPasswordValid = await bcrypt.compare(body.password, user.password);
+	
+	if (!isPasswordValid) {
+		c.status(403);
+		return c.json({ error: 'invalid password' });
+	  }
 
 	const jwt = await sign({ id: user.id }, c.env.JWT_SECRET);
 	return c.json({ jwt });
